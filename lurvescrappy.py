@@ -3,11 +3,17 @@
 
 from selenium import webdriver # pip install selenium
 from datetime import datetime
-import sys
+import sys, argparse
 
-if(len(sys.argv) == 1):
-    print '\nUsage:'
-    sys.exit()
+# program description
+parser = argparse.ArgumentParser(description="""Script for procedurally
+getting the command line love arguments from the ubuntu podcast website.
+The output of this script can be defined using optional flags
+""")
+
+# program flags
+parser.add_argument('--all', dest='getall', help='get all the command line loves from the archives')
+args = parser.parse_args()
 
 # use the phantomjs web driver and load the ubuntu homepage
 driver = webdriver.PhantomJS()
