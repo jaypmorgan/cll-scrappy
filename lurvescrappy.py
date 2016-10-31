@@ -3,8 +3,9 @@
 
 from selenium import webdriver # pip install selenium
 from datetime import datetime
+from lxml import etree, html
 import dateutil.relativedelta
-import sys, argparse, config, threading
+import sys, argparse, config, threading, chardet
 
 date_now = datetime.now()
 oldest_archive = datetime.strptime(config.oldest, '%Y-%m-%d')
@@ -22,21 +23,11 @@ args = parser.parse_args()
 #CLLs
 clls = {}
 
-class myThread(threading.Thread):
-	def __init__(self, url):
-		threading.Thread.__init__(self)
-		self.url = url
-	def run(self):
-
-		url_string = str(config.url + self.url)
-		driver = webdriver.PhantomJS()
-		driver.get(url_string)
-		links = driver.find_elements_by_xpath('*//article/header/h1/a')
-		for link in links:
-			get_particular(link.get_attribute('href'))
-
-		driver.close()
-		driver.quit()
+def get_source():
+	url_string = config.url + '/feed/podcast/'
+	driver = webdriver.PhantomJS()
+	driver.get(url_string)
+	return str(driver.page_source.encode('ascii', 'ignore').strip())
 
 # function for getting all the CLLs from the website
 # should be normally used when there is a back log
@@ -51,15 +42,17 @@ def get_all():
 		date_list.append(url_string) # add this to the array of urls to be scrapped
 		target_date = target_date - dateutil.relativedelta.relativedelta(months = 1) # take away another month
 
-	for date in date_list:
-		t = myThread(date)
-		t.start()
-
 # a function for getting only the latest CLL and outputs
 # a singular element that can be ammended to an existing
 # page of CLLs
 def get_latest():
-    return
+	source = get_source()
+	encoding = chardet.detect(source)['encoding']
+	if encoding != 'utf-8':
+		source = source.decode(encoding, 'replace').encode('utf-8')
+
+	encode_source = etree.parse(source)
+	return encode_source.xpath('/rss/channel')[0]
 
 # if you have a date of a particular podcast (or range of
 # dates) then this function will iterate over that range and
@@ -70,4 +63,4 @@ def get_particular(url):
 	cll = driver.find_element_by_xpath('*//code').text
 	print(cll)
 
-get_all()
+print(get_latest())
