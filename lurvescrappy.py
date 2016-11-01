@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from selenium import webdriver # pip install selenium
 from datetime import datetime
 from lxml import etree, html
 import dateutil.relativedelta
-import sys, argparse, config, threading, chardet
-
-date_now = datetime.now()
-oldest_archive = datetime.strptime(config.oldest, '%Y-%m-%d')
+import sys, argparse
+import urllib2
+from xml.etree import ElementTree as etree
+import lxml.etree
 
 # program description
 parser = argparse.ArgumentParser(description="""Script for procedurally
@@ -24,10 +23,17 @@ args = parser.parse_args()
 clls = {}
 
 def get_source():
-	url_string = config.url + '/feed/podcast/'
-	driver = webdriver.PhantomJS()
-	driver.get(url_string)
-	return str(driver.page_source.encode('ascii', 'ignore').strip())
+	hdr= {
+		'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+       	'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+       	'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+       	'Accept-Encoding': 'none',
+       	'Accept-Language': 'en-US,en;q=0.8',
+       	'Connection': 'keep-alive'
+	}
+	source = urllib2.Request('http://ubuntupodcast.org/feed/', headers=hdr)
+	source = urllib2.urlopen(source)
+	return source.read()
 
 # function for getting all the CLLs from the website
 # should be normally used when there is a back log
@@ -46,21 +52,18 @@ def get_all():
 # a singular element that can be ammended to an existing
 # page of CLLs
 def get_latest():
-	source = get_source()
-	encoding = chardet.detect(source)['encoding']
-	if encoding != 'utf-8':
-		source = source.decode(encoding, 'replace').encode('utf-8')
-
-	encode_source = etree.parse(source)
-	return encode_source.xpath('/rss/channel')[0]
+	root = lxml.etree.fromstring(get_source())
+	code = root.xpath('*//content:encoded', namespaces={
+		'content':'http://purl.org/rss/1.0/modules/content/',
+	})
+	cll = html.fromstring(code[1].text)
+	cll = cll.xpath('*//code')
+	print(cll[0].text)
 
 # if you have a date of a particular podcast (or range of
 # dates) then this function will iterate over that range and
 # generate an output of the CLLs that appear within that sequence
 def get_particular(url):
-	driver = webdriver.PhantomJS()
-	driver.get(url)
-	cll = driver.find_element_by_xpath('*//code').text
-	print(cll)
+	return
 
-print(get_latest())
+get_latest()
