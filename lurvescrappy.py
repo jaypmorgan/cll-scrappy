@@ -9,17 +9,6 @@ import urllib2
 from xml.etree import ElementTree as etree
 import lxml.etree
 
-# program description
-parser = argparse.ArgumentParser(description="""Script for procedurally
-getting the command line love arguments from the ubuntu podcast website.
-The output of this script can be defined using optional flags
-""")
-
-# program flags
-parser.add_argument('--all', dest='getall', help='get all the command line loves from the archives')
-args = parser.parse_args()
-
-#CLLs
 clls = []
 
 def get_source():
@@ -51,7 +40,7 @@ def get_all():
 			clls.append(cll[0].text) # TODO - what if there are multiples in episode???
 		except IndexError:
 			pass # do nothing here as there is no command line love in this episode
-	return clls
+	print(clls)
 
 # a function for getting only the latest CLL and outputs
 # a singular element that can be ammended to an existing
@@ -62,12 +51,21 @@ def get_latest():
 	cll = html.fromstring(code[0].text)
 	cll = cll.xpath('*//code')
 	clls.append(cll[0].text)
-	return clls
+	print(clls)
 
-# if you have a date of a particular podcast (or range of
-# dates) then this function will iterate over that range and
-# generate an output of the CLLs that appear within that sequence
-def get_particular(url):
-	return
+# program description
+parser = argparse.ArgumentParser(description="""Script for procedurally
+getting the command line love arguments from the ubuntu podcast website.
+The output of this script can be defined using optional flags
+""")
 
-print(get_latest())
+# program flags
+FUNCTION_MAP = {'all' : get_all,
+                'latest' : get_latest }
+
+parser.add_argument('command', choices=FUNCTION_MAP.keys())
+
+args = parser.parse_args()
+
+func = FUNCTION_MAP[args.command]
+func()
