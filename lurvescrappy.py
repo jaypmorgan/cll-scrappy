@@ -33,15 +33,16 @@ def get_source():
 	}
 	source = urllib2.Request('http://ubuntupodcast.org/feed/podcast', headers=hdr)
 	source = urllib2.urlopen(source)
-	return source.read()
+	root = lxml.etree.fromstring(source.read())
+	code = root.xpath('*//content:encoded', namespaces={
+		'content':'http://purl.org/rss/1.0/modules/content/',
+	})
+	return code
 
 # function for getting all the CLLs from the website
 # should be normally used when there is a back log
 def get_all():
-	root = lxml.etree.fromstring(get_source())
-	code = root.xpath('*//content:encoded', namespaces={
-		'content':'http://purl.org/rss/1.0/modules/content/',
-	})
+	code = get_source()
 
 	for x in range(0,len(code)):
 		cll = html.fromstring(code[x].text)
@@ -49,17 +50,15 @@ def get_all():
 		try:
 			clls.append(cll[0].text) # TODO - what if there are multiples in episode???
 		except IndexError:
-			print()
+			pass # do nothing here as there is no command line love in this episode
 	return clls
 
 # a function for getting only the latest CLL and outputs
 # a singular element that can be ammended to an existing
 # page of CLLs
 def get_latest():
-	root = lxml.etree.fromstring(get_source())
-	code = root.xpath('*//content:encoded', namespaces={
-		'content':'http://purl.org/rss/1.0/modules/content/',
-	})
+	code = get_source()
+
 	cll = html.fromstring(code[0].text)
 	cll = cll.xpath('*//code')
 	clls.append(cll[0].text)
@@ -71,4 +70,4 @@ def get_latest():
 def get_particular(url):
 	return
 
-print(get_all())
+print(get_latest())
