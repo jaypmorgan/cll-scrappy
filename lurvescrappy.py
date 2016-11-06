@@ -33,19 +33,17 @@ def get_source():
 # that the command is mentioned in. The input for this is the episode RSS feed.
 def get_command(feed):
 	source = html.fromstring(feed)
-	commands = source.xpath('*//ul/li/code/text()')
-	description = source.xpath('*//ul/li/code/../text()')
+	commands = source.xpath('*//code/text()')
+	description = source.xpath('*//code/../text()')
 
 	temp_clls = []
 
 	for x in range(0, len(commands)):
 		try:
-			temp_clls.append(commands[x])
-			temp_clls.append(description[x])
+			temp_clls.append([commands[x],' '.join(description)])
 		except IndexError:
 			pass
 
-	print(temp_clls)
 	return temp_clls
 
 # function for getting all the CLLs from the website
@@ -54,12 +52,8 @@ def get_all():
 	code = get_source()
 
 	for x in range(0,len(code)):
-		cll = html.fromstring(code[x].text)
-		cll = cll.xpath('*//code')
-		try:
-			clls.append(cll[0].text) # TODO - what if there are multiples in episode???
-		except IndexError:
-			pass # do nothing here as there is no command line love in this episode
+		cll = get_command(code[x].text)
+		clls.append(cll)
 	return clls
 
 # a function for getting only the latest CLL and outputs
@@ -68,9 +62,8 @@ def get_all():
 def get_latest():
 	code = get_source()
 
-	cll = html.fromstring(code[0].text)
-	cll = cll.xpath('*//code')
-	clls.append(cll[0].text)
+	cll = get_command(code[0].text)
+	clls.append(cll)
 	return clls
 
 # program description
