@@ -8,14 +8,14 @@ in the ubuntu podcast (http://ubuntupodcast.org).
 The script can be run using a python integreptor and a few command line arguments.
 Those are as follows:
 
-'''
+```
 python lurvescrappy.py all
-'''
+```
 
-the '''all''' will say to the script that you wish to retrieve a comprehensive list
+the ```all``` will say to the script that you wish to retrieve a comprehensive list
 of commands mentioned through the podcast catalogue.
 
 There are currently two arguments that are available for you to specify when running the script. Those
 are:
-- all (retrieve a complete list of commands)
-- latest (retrieve the latest command mentioned)
+- ```all``` (retrieve a complete list of commands)
+- ```latest``` (retrieve the latest command mentioned)
