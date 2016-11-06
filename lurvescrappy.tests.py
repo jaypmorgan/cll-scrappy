@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import unittest
 import lurvescrappy
+import rssfeeds # includes the test rss feed for test_get_command
 
 class TestScrappyMethods(unittest.TestCase):
 	def test_get_source(self):
@@ -13,6 +16,9 @@ class TestScrappyMethods(unittest.TestCase):
 	def test_get_latest(self):
 		cll = lurvescrappy.get_latest()
 		self.assertEqual(cll[0], 'nmtui') # needs a better test as it will fail when a new podcast is released
+
+	def test_get_command(self):
+		cll = lurvescrappy.get_command(rssfeeds.test_item)
 
 if __name__ == '__main__':
 	suite = unittest.TestLoader().loadTestsFromTestCase(TestScrappyMethods)
