@@ -20,10 +20,10 @@ def get_source():
        	'Accept-Language': 'en-US,en;q=0.8',
        	'Connection': 'keep-alive'
 	}
-	source = urllib2.Request('http://ubuntupodcast.org/feed/podcast', headers=hdr)
-	source = urllib2.urlopen(source)
-	root = lxml.etree.fromstring(source.read())
-	code = root.xpath('*//content:encoded', namespaces={
+	request = urllib2.Request('http://ubuntupodcast.org/feed/podcast', headers=hdr)
+	source = urllib2.urlopen(request).read()
+	root = lxml.etree.fromstring(source)
+	code = root.xpath('*//item', namespaces={
 		'content':'http://purl.org/rss/1.0/modules/content/',
 	})
 	return code
@@ -33,8 +33,12 @@ def get_source():
 # that the command is mentioned in. The input for this is the episode RSS feed.
 def get_command(feed):
 	source = html.fromstring(feed)
-	commands = source.xpath('*//code/text()')
-	description = source.xpath('*//code/../text()')
+	feed_content = source.xpath('*//content:encoded', namespaces={
+		'content':'http://purl.org/rss/1.0/modules/content/',
+	})
+
+	commands = feed_content.xpath('*//code/text()')
+	description = feed_content.xpath('*//code/../text()')
 
 	temp_clls = []
 
@@ -49,10 +53,11 @@ def get_command(feed):
 # function for getting all the CLLs from the website
 # should be normally used when there is a back log
 def get_all():
-	code = get_source()
+	items = get_source()
 
-	for x in range(0,len(code)):
-		cll = get_command(code[x].text)
+	for x in range(0,len(items)):
+		print(items[x].tag)
+		cll = get_command(items[x].text)
 		clls.append(cll)
 	return clls
 
