@@ -1,68 +1,43 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
-from lxml import etree, html
-import dateutil.relativedelta
+from bs4 import BeautifulSoup
 import sys, argparse
-import urllib2
-from xml.etree import ElementTree as etree
-import lxml.etree
-
 import feedparser # pip install feedparser
 
 clls = []
 
 def get_source():
-	feed = feedparser.parse('http://ubuntupodcast.org/feed/podcast')
-	print(feed)
-	print(feed['feed']['item'])
+	feeds = feedparser.parse('http://ubuntupodcast.org/feed/podcast')
+	for feed in feeds['entries']:
+		cll_item = {}
 
+		cll_item['item_title'] = feed['title']
+		html_content = feed['content'][0]['value']
 
-# this function is designed to return an array of command, description, and episode
-# that the command is mentioned in. The input for this is the episode RSS feed.
-def get_command(feed):
-	source = html.fromstring(feed)
-	feed_content = source.xpath('*//content:encoded', namespaces={
-		'content':'http://purl.org/rss/1.0/modules/content/',
-	})
+		soup = BeautifulSoup(html_content, 'html.parser')
 
-	print(feed_content)
+		cll = []
+		for commands in soup.find_all('code'):
+			cll.append(commands.get_text())
 
-	commands = feed_content.xpath('*//code/text()')
-	description = feed_content.xpath('*//code/../text()')
-
-	temp_clls = []
-
-	for x in range(0, len(commands)):
-		try:
-			temp_clls.append([commands[x],' '.join(description)])
-		except IndexError:
-			pass
-
-	return temp_clls
+		# if a cll argument was found in the podcast description
+		if len(cll):
+			cll_item['command'] = cll # add it to the array
+			clls.append(cll_item) # then add it to the global dictionary
 
 # function for getting all the CLLs from the website
 # should be normally used when there is a back log
 def get_all():
 	items = get_source()
-	print(items[0].text)
-
-	for x in range(0,len(items)):
-		# print(items[x].text)
-		cll = get_command(items[x].text)
-		clls.append(cll)
-	return clls
+	print(clls)
 
 # a function for getting only the latest CLL and outputs
 # a singular element that can be ammended to an existing
 # page of CLLs
 def get_latest():
 	code = get_source()
-
-	cll = get_command(code[0].text)
-	clls.append(cll)
-	return clls
+	print(clls[0])
 
 # program description
 parser = argparse.ArgumentParser(description="""Script for procedurally
