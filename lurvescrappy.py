@@ -9,24 +9,14 @@ import urllib2
 from xml.etree import ElementTree as etree
 import lxml.etree
 
+import feedparser # pip install feedparser
+
 clls = []
 
 def get_source():
-	hdr= {
-		'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
-       	'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-       	'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-       	'Accept-Encoding': 'none',
-       	'Accept-Language': 'en-US,en;q=0.8',
-       	'Connection': 'keep-alive'
-	}
-	request = urllib2.Request('http://ubuntupodcast.org/feed/podcast', headers=hdr)
-	source = urllib2.urlopen(request).read()
-	root = lxml.etree.fromstring(source)
-	code = root.xpath('*//item', namespaces={
-		'content':'http://purl.org/rss/1.0/modules/content/',
-	})
-	return code
+	feed = feedparser.parse('http://ubuntupodcast.org/feed/podcast')
+	print(feed)
+	print(feed['feed']['item'])
 
 
 # this function is designed to return an array of command, description, and episode
@@ -36,6 +26,8 @@ def get_command(feed):
 	feed_content = source.xpath('*//content:encoded', namespaces={
 		'content':'http://purl.org/rss/1.0/modules/content/',
 	})
+
+	print(feed_content)
 
 	commands = feed_content.xpath('*//code/text()')
 	description = feed_content.xpath('*//code/../text()')
@@ -54,9 +46,10 @@ def get_command(feed):
 # should be normally used when there is a back log
 def get_all():
 	items = get_source()
+	print(items[0].text)
 
 	for x in range(0,len(items)):
-		print(items[x].tag)
+		# print(items[x].text)
 		cll = get_command(items[x].text)
 		clls.append(cll)
 	return clls
