@@ -12,7 +12,7 @@ def get_source():
 	for feed in feeds['entries']:
 		cll_item = {}
 
-		cll_item['item_title'] = feed['title']
+		cll_item['title'] = feed['title']
 		html_content = feed['content'][0]['value']
 
 		soup = BeautifulSoup(html_content, 'html.parser')
@@ -46,12 +46,28 @@ The output of this script can be defined using optional flags
 """)
 
 # program flags
-FUNCTION_MAP = {'all' : get_all,
-                'latest' : get_latest }
-
-parser.add_argument('command', choices=FUNCTION_MAP.keys())
-
+parser.add_argument('--html',
+					help="output the clls as a html table",
+					action="store_true")
+parser.add_argument('-o', '--output',
+					help="specify an output file for the clls to be stored to")
 args = parser.parse_args()
 
-func = FUNCTION_MAP[args.command]
-func()
+get_source()
+if args.html:
+	output_string = "<table><tr>"
+	for key, value in clls[0].iteritems():
+		output_string += "<th>"
+		output_string += key
+		output_string += "</th>"
+	output_string += "</tr>"
+	for cll in clls:
+		output_string += "<tr><td>"
+		for command in cll['command']:
+			output_string += command
+		output_string += "</td><td>"
+		output_string += cll['title']
+		output_string += "</td></tr>"
+
+	output_string += "</table>"
+	print(output_string.encode('ascii', 'ignore'))
