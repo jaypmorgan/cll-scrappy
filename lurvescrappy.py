@@ -70,4 +70,12 @@ if args.html:
 		output_string += "</td></tr>"
 
 	output_string += "</table>"
-	print(output_string.encode('ascii', 'ignore'))
+	output_string = output_string.encode('ascii', 'ignore')
+
+if args.output:
+	f = open(args.output, 'w')
+	if args.html:
+		print >> f, output_string
+	else:
+		print >> f, clls
+	f.close()
