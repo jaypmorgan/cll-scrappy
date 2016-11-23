@@ -49,6 +49,9 @@ The output of this script can be defined using optional flags
 parser.add_argument('--html',
 					help="output the clls as a html table",
 					action="store_true")
+parser.add_argument('--json',
+					help="output the clls as a json format",
+					action="store_true")
 parser.add_argument('-o', '--output',
 					help="specify an output file for the clls to be stored to")
 args = parser.parse_args()
@@ -71,6 +74,9 @@ if args.html:
 
 	output_string += "</table>"
 	output_string = output_string.encode('ascii', 'ignore')
+
+if args.json:
+	# TODO add output_string in a json format
 
 if args.output:
 	f = open(args.output, 'w')
