@@ -7,7 +7,6 @@ import feedparser # pip install feedparser
 import json
 
 clls = []
-output = []
 
 def get_source():
 	feeds = feedparser.parse('http://ubuntupodcast.org/feed/podcast')
@@ -28,13 +27,28 @@ def get_source():
 			cll_item['command'] = cll # add it to the array
 			clls.append(cll_item) # then add it to the global dictionary
 
+# function for getting all the CLLs from the website
+# should be normally used when there is a back log
+def get_all():
+	items = get_source()
+	print(clls)
+
+# a function for getting only the latest CLL and outputs
+# a singular element that can be ammended to an existing
+# page of CLLs
+def get_latest():
+	code = get_source()
+	print(clls[0])
+
 # program description
 parser = argparse.ArgumentParser(description="""Script for procedurally
 getting the command line love arguments from the ubuntu podcast website.
 The output of this script can be defined using optional flags
 """)
+sub_parser = parser.add_subparsers()
 
-parser.add_argument('state', choices=['all', 'latest'], nargs='?')
+sub = sub_parser.add_parser('all')
+sub = sub_parser.add_parser('latest')
 
 # program flags
 parser.add_argument('--html',
@@ -46,16 +60,16 @@ parser.add_argument('--json',
 parser.add_argument('-o', '--output',
 					help="specify an output file for the clls to be stored to")
 args = parser.parse_args()
-get_source()
 
-def print_html():
+
+if args.html:
 	output_string = "<table><tr>"
 	for key, value in clls[0].iteritems():
 		output_string += "<th>"
 		output_string += key
 		output_string += "</th>"
 	output_string += "</tr>"
-	for cll in output:
+	for cll in clls:
 		output_string += "<tr><td>"
 		for command in cll['command']:
 			output_string += command
@@ -65,34 +79,20 @@ def print_html():
 
 	output_string += "</table>"
 	output_string = output_string.encode('ascii', 'ignore')
-	return output_string
 
-def print_json():
+if args.json:
 	output_string = json.dumps(clls)
 	output_string = output_string.encode('ascii', 'ignore')
-	return output_string
-
-selected_command = str(args.state)
-if selected_command == 'all':
-	output = clls
-elif selected_command == 'latest':
-	output = [clls[0]]
-else:
-	output = clls
 
 if args.output:
 	f = open(args.output, 'w')
-	if args.json:
-		print >> f, print_json()
-	elif args.html:
-		print >> f, print_html()
+	if args.json or args.html:
+		print >> f, output_string
 	else:
-		print >> f, output
+		print >> f, clls
 	f.close()
 else:
-	if args.json:
-		print(print_json())
-	elif args.html:
-		print(print_html())
+	if args.json or args.html:
+		print(output_string)
 	else:
-		print(output)
+		print(clls)
