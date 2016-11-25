@@ -45,6 +45,10 @@ parser = argparse.ArgumentParser(description="""Script for procedurally
 getting the command line love arguments from the ubuntu podcast website.
 The output of this script can be defined using optional flags
 """)
+sub_parser = parser.add_subparsers()
+
+sub = sub_parser.add_parser('all')
+sub = sub_parser.add_parser('latest')
 
 # program flags
 parser.add_argument('--html',
@@ -57,7 +61,7 @@ parser.add_argument('-o', '--output',
 					help="specify an output file for the clls to be stored to")
 args = parser.parse_args()
 
-get_source()
+
 if args.html:
 	output_string = "<table><tr>"
 	for key, value in clls[0].iteritems():
