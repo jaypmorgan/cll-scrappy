@@ -4,6 +4,7 @@
 from bs4 import BeautifulSoup
 import sys, argparse
 import feedparser # pip install feedparser
+import json
 
 clls = []
 
@@ -76,12 +77,18 @@ if args.html:
 	output_string = output_string.encode('ascii', 'ignore')
 
 if args.json:
-	# TODO add output_string in a json format
+	output_string = json.dumps(clls)
+	output_string = output_string.encode('ascii', 'ignore')
 
 if args.output:
 	f = open(args.output, 'w')
-	if args.html:
+	if args.json or args.html:
 		print >> f, output_string
 	else:
 		print >> f, clls
 	f.close()
+else:
+	if args.json or args.html:
+		print(output_string)
+	else:
+		print(clls)
