@@ -31,7 +31,6 @@ a {
 
 #wrapper {
   width:70%;
-  height:105%;
   margin: 0 auto;
   background-color: #F8F8F8;
   padding:20px;
@@ -66,19 +65,20 @@ a {
   height: 70px;
   margin: 0 auto;
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .button {
   width: 220px;
-  height: 70px;
-  line-height: 50px;
+  height: 60px;
+  line-height: 42px;
   color: white;
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: #EB5B28;
-  border-radius: 5px;
+  border-radius: 10px;
   float: left;
   margin: 20px;
   cursor: pointer;
@@ -101,6 +101,43 @@ a {
   font-weight: bold;
   user-select: none;
   cursor: pointer;
+}
+
+table {
+  width:100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-sizing: border-box;
+  margin-top: 70px;
+}
+
+table th {
+  text-align:center;
+  color: white;
+  background-color: #EB5B28;
+  padding: 15px;
+  border: 1px solid #EB5B28;
+}
+
+table td {
+  padding: 15px;
+  border: 1px solid #CACACA;
+  line-height: 200%;
+  font-family: 'Open Sans', sans-serif;
+}
+
+td.command {
+  vertical-align: top;
+
+}
+
+td.description {
+  width:40%;
+}
+
+td.appearance {
+  vertical-align: top;
+  width: 30%;
 }
 
 @media (max-width: 1331px) {
