@@ -1,11 +1,14 @@
 <html>
 <head>
   <title>LurveScrappy</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/general.css">
+	<link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="lib/DataTables/datatables.min.css"/>
+	<script type="text/javascript" src="lib/DataTables/datatables.min.js"></script>
+	<script src="js/script.js" type="text/javascript"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <div id="wrapper">
@@ -13,35 +16,99 @@
     <img src="img/lurvescrappy.gif"/>
   </div>
   <div id="content">
-Lurvescrappy, a webpage dedicated to the distribution of command line ‘lurves’ mentioned in the UK Ubuntu Podcast (<a href="http://ubuntupodcast.org">http://ubuntupodcast.org</a>). This site is driven by a very simple, if not crude, python script. If you notice any commands missing, give us a quick email or contribute by helping making the script smarter! You can find the relevant links below.
+Lurvescrappy, a webpage dedicated to the distribution of command line 'lurves' mentioned in the UK Ubuntu Podcast (<a href="http://ubuntupodcast.org">http://ubuntupodcast.org</a>). This site is driven by a very simple, if not crude, python script. If you notice any commands missing, give us a quick email or contribute by helping making the script smarter! You can find the relevant links below.
   </div>
   <div id="links">
     <div class="button"><img src="img/github-logo.gif"><p>Help on Github</p></div>
     <div class="button"><img src="img/email-logo.gif"><p>Help by Email</p></div>
   </div>
-  <table>
-    <tr>
-      <th>Command</th>
-      <th>Description</th>
-      <th>Appearance</th>
-    </tr>
-    <tr>
-      <td class="command">Some dummy content</td>
-      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
-      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
-    </tr><tr>
-      <td class="command">Some dummy content</td>
-      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
-      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
-    </tr><tr>
-      <td class="command">Some dummy content</td>
-      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
-      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
-    </tr><tr>
-      <td class="command">Some dummy content</td>
-      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
-      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
-    </tr>
+  <table id="command-table" class="table table-striped">
+    <thead>
+			<tr>
+      	<th>Command</th>
+      	<th>Description</th>
+      	<th>Appearance</th>
+				<th>Date</th>
+    	</tr>
+		</thead>
+		<tbody>
+	    <tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+			</tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr><tr>
+	      <td class="command">Some dummy content</td>
+	      <td class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor, eros ac iaculis lobortis, massa elit molestie augue, et suscipit enim ex ut libero. Curabitur ac ante sit amet eros congue vestibulum ac in purus. Nulla facilisi.</td>
+	      <td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+				<td class="appearance"><a href="#">This is some none linking dummy content</a></td>
+	    </tr>
+		</tbody>
   </table>
 </div>
 </body>
