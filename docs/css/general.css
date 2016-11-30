@@ -61,17 +61,20 @@ a {
 }
 
 #links {
-  width: 60%;
+  width: 100%;
   height: 70px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 30px;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .button {
+display: inline-block;
   width: 220px;
   height: 60px;
-  line-height: 42px;
+  line-height: 40px;
   color: white;
   padding-left: 10px;
   padding-right: 10px;
@@ -79,8 +82,9 @@ a {
   padding-bottom: 10px;
   background-color: #EB5B28;
   border-radius: 10px;
-  float: left;
   margin: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   cursor: pointer;
 }
 
