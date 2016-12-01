@@ -178,7 +178,7 @@ label {
 
 @media (max-width: 1331px) {
   #wrapper {
-    width: 90%;
+    width: 100%;
     padding: 16px;
   }
 
@@ -222,4 +222,10 @@ label {
   #command-table_wrapper {
     position: static;
   }
+}
+
+@media (min-width: 700px) {
+	#wrapper {
+		width:90%;
+	}
 }
