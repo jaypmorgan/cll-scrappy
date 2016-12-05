@@ -4,3 +4,4 @@
 *.ai
 *.pem
 docs/design/*
+*.json
