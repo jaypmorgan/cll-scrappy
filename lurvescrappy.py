@@ -15,6 +15,7 @@ def get_source():
 		cll_item = {}
 
 		cll_item['title'] = feed['title']
+		cll_item['url'] = feed['link']
 		html_content = feed['content'][0]['value']
 
 		soup = BeautifulSoup(html_content, 'html.parser')
