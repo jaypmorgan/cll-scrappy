@@ -11,7 +11,9 @@ $(document).ready(function() {
 			output_html += "</tr>";
 		});
 		$('tbody').append(output_html);
-		$('#command-table').dataTable();
+		$('#command-table').dataTable({
+			"order": [[ 1, "desc" ]]
+		});
 	});
 
 });
