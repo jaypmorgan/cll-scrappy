@@ -1,6 +1,6 @@
 body {
   font-family:"Ubuntu", sans-serif;
-  background-image: url('../img/pattern.png');
+  background-image: url('img/pattern.png');
   background-repeat: repeat;
   background-size: 1.5%;
 
@@ -174,9 +174,14 @@ label {
 }
 
 @media (max-width: 1331px) {
+	body {
+		margin: 0;
+	}
+
   #wrapper {
     width: 100%;
     padding: 16px;
+		border: 0px;
   }
 
   #content {
@@ -219,10 +224,4 @@ label {
   #command-table_wrapper {
     position: static;
   }
-}
-
-@media (min-width: 700px) {
-	#wrapper {
-		width:90%;
-	}
 }
